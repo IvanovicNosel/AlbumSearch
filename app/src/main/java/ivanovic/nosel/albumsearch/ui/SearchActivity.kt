@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
 import android.support.v7.widget.SearchView
-import android.util.Log
 import android.view.Menu
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
@@ -18,7 +17,7 @@ class SearchActivity : AppCompatActivity(), Observer<List<Album>> {
     @Inject
     lateinit var albumListViewModel: AlbumListViewModel
 
-    private val adapter = ivanovic.nosel.albumsearch.ui.AlbumAdapter()
+    private val adapter = AlbumAdapter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,9 +30,9 @@ class SearchActivity : AppCompatActivity(), Observer<List<Album>> {
         albumListViewModel.albumListData.observe(this, this)
     }
 
-    override fun onChanged(updatedLIst: List<Album>?) {
-        if (updatedLIst != null && updatedLIst.isNotEmpty()) {
-            adapter.albumList = updatedLIst
+    override fun onChanged(updatedList: List<Album>?) {
+        if (updatedList != null && updatedList.isNotEmpty()) {
+            adapter.albumList = updatedList
         }
     }
 
@@ -56,7 +55,6 @@ class SearchActivity : AppCompatActivity(), Observer<List<Album>> {
                 .create { emitter: ObservableEmitter<String> ->
                     actionView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
                         override fun onQueryTextSubmit(query: String?): Boolean {
-                            Log.d("TEST", "from onQueryTextSubmit: $query")
                             if (query != null) {
                                 emitter.onNext(query)
                             }
@@ -65,10 +63,6 @@ class SearchActivity : AppCompatActivity(), Observer<List<Album>> {
 
                         override fun onQueryTextChange(newText: String?): Boolean = false
                     })
-                }
-                .map {
-                    Log.d("TEST", "from search view: $it")
-                    it
                 }
         albumListViewModel.bindQueryObservable(queryObservable)
     }

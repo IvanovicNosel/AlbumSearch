@@ -1,6 +1,5 @@
 package ivanovic.nosel.albumsearch.domain
 
-import android.util.Log
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Observable.just
@@ -14,7 +13,6 @@ class AlbumSearchInteractor @Inject constructor(private val albumRepository: Alb
         val term = searchTerm.encodeSearchTerm()
         return albumRepository.get(term)
                 .flatMap {
-                    Log.d("TEST","Interactor.search: $it")
                     fetchIfEmpty(it, term).andThen(just(it))
                 }
     }

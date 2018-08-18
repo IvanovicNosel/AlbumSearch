@@ -12,7 +12,7 @@ interface SearchApi {
     fun search(@Query("term") term: String,
                @Query("country") country: String = "CA",
                @Query("media") media: String = "music",
-               @Query("entity`  ") entity: String = "album"): Single<AlbumSearch>
+               @Query("entity") entity: String = "album"): Single<AlbumSearch>
 }
 
 data class AlbumSearch(val results: List<AlbumResult>)
