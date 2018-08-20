@@ -16,13 +16,4 @@ interface SearchModule {
     @Binds
     fun bindsAlbumStore(store: InMemoryAlbumStore): AlbumStore
 
-    @Module
-    object ProvidesModule {
-        @Provides
-        @JvmStatic
-        fun providesSearchViewModel(albumRepository: AlbumSearchInteractor): AlbumListViewModel {
-            return AlbumListViewModel(albumRepository)
-        }
-
-    }
 }

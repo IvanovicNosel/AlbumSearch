@@ -12,10 +12,9 @@ import ivanovic.nosel.albumsearch.data.AlbumResult
 import ivanovic.nosel.albumsearch.domain.AlbumSearchInteractor
 import javax.inject.Inject
 
-class AlbumListViewModel @Inject
-constructor(private val searchInteractor: AlbumSearchInteractor)
-    : ViewModel() {
+class AlbumListViewModel : ViewModel() {
 
+    lateinit var searchInteractor: AlbumSearchInteractor
     private val disposables = CompositeDisposable()
     val albumListData = MutableLiveData<List<Album>>()
 

@@ -1,6 +1,7 @@
 package ivanovic.nosel.albumsearch.ui
 
 import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProviders
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.RecyclerView
@@ -10,12 +11,16 @@ import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.ObservableEmitter
 import ivanovic.nosel.albumsearch.R
+import ivanovic.nosel.albumsearch.domain.AlbumSearchInteractor
 import javax.inject.Inject
 
 class SearchActivity : AppCompatActivity(), Observer<List<Album>> {
 
     @Inject
+    lateinit var searchInteractor: AlbumSearchInteractor
+
     lateinit var albumListViewModel: AlbumListViewModel
+
 
     private val adapter = AlbumAdapter()
 
@@ -26,7 +31,8 @@ class SearchActivity : AppCompatActivity(), Observer<List<Album>> {
 
         val recyclerView = findViewById<RecyclerView>(R.id.search_results)
         recyclerView.adapter = adapter
-
+        albumListViewModel = ViewModelProviders.of(this).get(AlbumListViewModel::class.java)
+        albumListViewModel.searchInteractor = searchInteractor
         albumListViewModel.albumListData.observe(this, this)
     }
 

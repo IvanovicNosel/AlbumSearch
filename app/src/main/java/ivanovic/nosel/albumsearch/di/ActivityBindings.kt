@@ -7,6 +7,6 @@ import ivanovic.nosel.albumsearch.ui.SearchActivity
 @Module
 interface ActivityBindings {
 
-    @ContributesAndroidInjector(modules = [SearchModule::class, SearchModule.ProvidesModule::class])
+    @ContributesAndroidInjector(modules = [SearchModule::class])
     fun bindsSearchActivity(): SearchActivity
 }
